@@ -21,6 +21,21 @@ namespace PockemonAPI
 
         [JsonPropertyName("base_experience")]
         public int BaseExperience { get; set; }
+
+        [JsonPropertyName("types")]
+        public List<TypeSlot> Types { get; set; }
+    }
+
+    public class TypeSlot
+    {
+        [JsonPropertyName("type")]
+        public PokemonType Type { get; set; }
+    }
+
+    public class PokemonType
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
     }
 
 }

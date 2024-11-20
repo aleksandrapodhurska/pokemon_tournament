@@ -13,14 +13,15 @@ namespace PockemonAPI.Controllers
     [ApiController]
     public class PokemonController : ControllerBase
     {
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
         public const int MaxId = 151;
 
         public PokemonController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiUrl = configuration.GetValue<string>("AppSettings:ThirdPartyApiUrl");
+            _apiUrl = configuration.GetValue<string>("AppSettings:connStr");
+
         }
 
 
@@ -29,7 +30,7 @@ namespace PockemonAPI.Controllers
         {
             ValidateSortingParameters(sortBy, sortDirection);
 
-            List<Pokemon> pokemons = await FetchEightRandomPokemons();
+            List<Pokemon> pokemons = new List<Pokemon>{};
 
             try
             {
@@ -71,38 +72,40 @@ namespace PockemonAPI.Controllers
             var pokemonsList = new List<Pokemon>();
             int[] seenIds = new int[] {};
             Random random = new Random();
+            int randomId = 0;
 
             while (pokemonsList.Count < 8)
             {
-                int randomId = random.Next(1, MaxId);
+                do
+                {
+                    randomId = random.Next(1, MaxId); // generate a random number between 1 and 99
+                } while (seenIds.Contains(randomId));
 
-                var response = await _httpClient.GetAsync(_apiUrl + $"/{randomId}");
+                var response = await _httpClient.GetAsync($"{_apiUrl}/pokemon/{randomId}");
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new ApiRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
                 }
-                else
-                {
-                    var data = await response.Content.ReadAsStringAsync();
+                var data = await response.Content.ReadAsStringAsync();
                     
-                    if (string.IsNullOrEmpty(data))
-                    {
-                        throw new ApiRequestException($"No Pokémon found with ID: {randomId}");
-                    }
-
-                    var fetchedPokemon = JsonSerializer.Deserialize<PokemonDTO>(data);
-
-                    Pokemon pokemon = new Pokemon();
-                    pokemon.Id = randomId;
-                    pokemon.Name = fetchedPokemon.Name;
-                    pokemon.Ties = 0;
-                    pokemon.Loses = 0;
-                    pokemon.Wins = 0;
-                    pokemon.BaseExperience = fetchedPokemon.BaseExperience;
-                    pokemonsList.Add(pokemon);
-
-                    seenIds.Append(randomId);
+                if (string.IsNullOrEmpty(data))
+                {
+                    throw new ApiRequestException($"No Pokémon found with ID: {randomId}");
                 }
+
+                var fetchedPokemon = JsonSerializer.Deserialize<PokemonDTO>(data);
+
+                Pokemon pokemon = new Pokemon();
+                pokemon.Id = randomId;
+                pokemon.Name = fetchedPokemon.Name;
+                pokemon.Type = fetchedPokemon.Types.First().Type.Name;
+                pokemon.Ties = 0;
+                pokemon.Losses = 0;
+                pokemon.Wins = 0;
+                pokemon.BaseExperience = fetchedPokemon.BaseExperience;
+                pokemonsList.Add(pokemon);
+
+                seenIds.Append(randomId);
             }
             return pokemonsList;
         }

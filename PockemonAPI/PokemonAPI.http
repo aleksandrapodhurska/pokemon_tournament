@@ -1,0 +1,12 @@
+﻿@PokemonAPI_HostAddress = http://localhost:5101
+
+GET {{PokemonAPI_HostAddress}}/pokemon/tournament/statistics?sortBy=name
+
+###
+
+GET {{PokemonAPI_HostAddress}}/pokemon/tournament/statistics?sortBy=string
+
+###
+
+
+GET http://localhost:5101/api?sortBy=wins&sortDirection=as
