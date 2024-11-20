@@ -1,36 +1,39 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Pokémon Tournament Statistics</h1>
-  
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="sortBy">Sort By:</label>
-          <select
-            id="sortBy"
-            [(ngModel)]="selectedSortBy"
-            (change)="onSortByChange()"
-            class="form-control"
-          >
-            <option *ngFor="let option of sortByOptions" [value]="option">
-              {{ option | titlecase }}
-            </option>
-          </select>
+    
+    <div class="row">
+      <div class="row mb-3">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="sortBy">Sort By:</label>
+            <select
+              id="sortBy"
+              [(ngModel)]="selectedSortBy"
+              class="form-control"
+            >
+              <option *ngFor="let option of sortByOptions" [value]="option">
+                {{ option | titlecase }}
+              </option>
+            </select>
+          </div>
         </div>
-      </div>
-  
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="sortDirection">Sort Direction:</label>
-          <select
-            id="sortDirection"
-            [(ngModel)]="selectedSortDirection"
-            (change)="onSortDirectionChange()"
-            class="form-control"
-          >
-            <option *ngFor="let option of sortDirectionOptions" [value]="option">
-              {{ option | titlecase }}
-            </option>
-          </select>
+    
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="sortDirection">Sort Direction:</label>
+            <select
+              id="sortDirection"
+              [(ngModel)]="selectedSortDirection"
+              class="form-control"
+            >
+              <option *ngFor="let option of sortDirectionOptions" [value]="option">
+                {{ option | titlecase }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button id="submitBtn" class="btn btn-success mt-4" (click)="fetchData()">Get Results</button>
         </div>
       </div>
     </div>
@@ -50,7 +53,7 @@
           <th>Ties</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="table-hover">
         <tr *ngFor="let pokemon of pokemons">
           <td>{{ pokemon.id }}</td>
           <td>{{ pokemon.name | titlecase }}</td>

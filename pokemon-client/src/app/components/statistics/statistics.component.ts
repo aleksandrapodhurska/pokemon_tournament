@@ -26,14 +26,6 @@ export class StatisticsComponent implements OnInit{
     this.fetchData();
   }
 
-  onSortByChange() {
-    this.fetchData();
-  }
-
-  onSortDirectionChange() {
-    this.fetchData();
-  }
-
   fetchData(): void {
     this._pokemonService.getPokemonStatistics(this.selectedSortBy, this.selectedSortDirection).subscribe(data => {
       this.pokemons = data;
