@@ -48,3 +48,33 @@ npm-debug.log*
 *.dll
 *.pdb
 *.exe
+
+# Angular-related files
+
+# Node.js dependencies
+/node_modules/
+
+# Angular build output
+/dist/
+/out-tsc/
+
+# Compiled TypeScript files
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.swp
+*.swo
+
+# TypeScript declaration files
+*.d.ts
+
+# .npmrc file
+.npmrc
+
+# Angular CLI service worker files
+ngsw-config.json
