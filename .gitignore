@@ -1,0 +1,50 @@
+# .NET Core
+bin/
+obj/
+
+# User-specific files
+.vs/
+.vscode/
+.idea/
+
+# .NET Core lock files
+project.lock.json
+project.fragment.lock.json
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# ASP.NET Core
+wwwroot/
+
+# DotCover (JetBrains)
+.idea/
+
+# Rider config folder
+.idea/
+
+# Visual Studio for Mac
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# JetBrains Rider
+.idea/
+
+# npm logs
+npm-debug.log*
+
+# .NET Core
+*.dll
+*.pdb
+*.exe
